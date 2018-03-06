@@ -3,7 +3,7 @@ def permToCycles(perm):
     cycles = []
 
     while pi:
-        elem0 = next(iter(pi)) # arbitrary starting element
+        elem0 = next(iter(pi))
         this_elem = pi[elem0]
         next_item = pi[this_elem]
 
@@ -16,7 +16,7 @@ def permToCycles(perm):
                 next_item = pi[next_item]
             else:
                 break
-        cycle.sort()
+        
         if len(cycle)>1:
         	cycles.append(cycle)
 
@@ -27,7 +27,7 @@ def findOrbits(perm):
     cycles = []
 
     while pi:
-        elem0 = next(iter(pi)) # arbitrary starting element
+        elem0 = next(iter(pi))
         this_elem = pi[elem0]
         next_item = pi[this_elem]
 
@@ -92,18 +92,31 @@ def main():
 	cycles = permToCycles(permlist)
 	orbits = findOrbits(permlist)
 	length = n - len(orbits)
+	transpositions = []
+	p = 0
+	for num in permlist:
+		for i in xrange(permlist.index(num)+1,len(permlist)):
+			if num > i:
+				p += 1
 	print "Length of Sn:"
 	print length
+	print "Inverse Sn: "
+	print inversePerm(permlist)
 	print "Sn as a product of disjoint cycles: "
 	for cycle in cycles:
 		print "("+''.join(str(e) for e in cycle)+")",
-	print "\n"
-
-	print "Inverse Sn: "
-	print inversePerm(permlist)
-
+	print ""
+	print "Number of Paraviaseis: ",p
 	print "Sn as a product of transpositions: "
-	print permToTranspositions(cycles)
+	for pinakakiklou in permToTranspositions(cycles):
+		for antimetathesi in pinakakiklou:
+			transpositions.append(antimetathesi)
+			print antimetathesi,
+	print ""
+	if len(transpositions) % 2 == 0:
+		print "Permutation is EVEN"
+	else:
+		print "Permutation is ODD"
 
 
 if __name__ == "__main__":
