@@ -17,8 +17,8 @@ def permToCycles(perm):
             else:
                 break
         
-        if len(cycle)>1:
-        	cycles.append(cycle)
+
+        cycles.append(cycle)
 
     return cycles
 
@@ -96,7 +96,7 @@ def main():
 	p = 0
 	for num in permlist:
 		for i in xrange(permlist.index(num)+1,len(permlist)):
-			if num > i:
+			if num > permlist[i]:
 				p += 1
 	print "Length of Sn:"
 	print length
