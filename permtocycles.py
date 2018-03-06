@@ -1,3 +1,5 @@
+from fractions import gcd
+
 def permToCycles(perm):
     pi = {i+1: perm[i] for i in range(len(perm))}
     cycles = []
@@ -45,6 +47,24 @@ def findOrbits(perm):
         cycles.append(cycle)
 
     return cycles
+
+def findGCD(lengths):
+	res = gcd(*lengths[:2])
+	for length in lengths[2:]:
+		res = gcd(res, length)
+	return res
+
+def findLCM(lengths):
+	mul = 1
+	for length in lengths:
+		mul *= length
+	return mul/findGCD(lengths)
+
+def findOrder(cycles):
+	lengths = []
+	for cycle in cycles:
+		lengths.append(len(cycle))
+	return findLCM(lengths)
 
 
 
@@ -117,7 +137,7 @@ def main():
 		print "Permutation is EVEN"
 	else:
 		print "Permutation is ODD"
-
+	print "Order is: ",findOrder(cycles)
 
 if __name__ == "__main__":
 	main()	
