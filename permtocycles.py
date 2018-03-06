@@ -16,13 +16,39 @@ def permToCycles(perm):
                 next_item = pi[next_item]
             else:
                 break
+        cycle.sort()
+        if len(cycle)>1:
+        	cycles.append(cycle)
 
+    return cycles
+
+def findOrbits(perm):
+    pi = {i+1: perm[i] for i in range(len(perm))}
+    cycles = []
+
+    while pi:
+        elem0 = next(iter(pi)) # arbitrary starting element
+        this_elem = pi[elem0]
+        next_item = pi[this_elem]
+
+        cycle = []
+        while True:
+            cycle.append(this_elem)
+            del pi[this_elem]
+            this_elem = next_item
+            if next_item in pi:
+                next_item = pi[next_item]
+            else:
+                break
+        cycle.sort()
+        
         cycles.append(cycle)
 
     return cycles
 
-def permutationInput():
-	n = int(raw_input("Give me [n]: "))
+
+
+def permutationInput(n):
 	perm = raw_input("Give me Sn (n numbers with space in between): ")
 	perm = perm.split(" ")
 	plhthos = []
@@ -45,17 +71,39 @@ def inversePerm(perm):
 	for i in range(len(perm)):
 		invperm.append(0)
 	for element in perm:
-		print element - 1
 		invperm[element - 1] = perm.index(element) + 1
 	return invperm
 
+def permToTranspositions(cycles):
+	transprod = []
+	for cycle in cycles:
+		transpose = []
+		for num in cycle[len(cycle)-1:0:-1]:
+			tupla = cycle[0],num
+			transpose.append(tupla)
+		transprod.append(transpose)
+	return transprod
+
 def main():
-	permtuple = permutationInput()
+	n = int(raw_input("Give me [n]: "))
+	permtuple = permutationInput(n)
 	permlist = permtuple[0]
 	plhthos = permtuple[1]
 	cycles = permToCycles(permlist)
-	print cycles
+	orbits = findOrbits(permlist)
+	length = n - len(orbits)
+	print "Length of Sn:"
+	print length
+	print "Sn as a product of disjoint cycles: "
+	for cycle in cycles:
+		print "("+''.join(str(e) for e in cycle)+")",
+	print "\n"
+
+	print "Inverse Sn: "
 	print inversePerm(permlist)
+
+	print "Sn as a product of transpositions: "
+	print permToTranspositions(cycles)
 
 
 if __name__ == "__main__":
