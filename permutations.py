@@ -58,7 +58,7 @@ def findLCM(lengths):
 	mul = 1
 	for length in lengths:
 		mul *= length
-	return mul/findGCD(lengths)
+	return mul/findGCD(lengths)/len(lengths)
 
 def findOrder(cycles):
 	lengths = []
