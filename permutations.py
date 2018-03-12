@@ -24,7 +24,8 @@ def permToCycles(perm):
 
     return cycles
 
-def findOrbits(perm):
+#no need
+'''def findOrbits(perm):
     pi = {i+1: perm[i] for i in range(len(perm))}
     cycles = []
 
@@ -46,7 +47,7 @@ def findOrbits(perm):
         
         cycles.append(cycle)
 
-    return cycles
+    return cycles'''
 
 def findGCD(lengths):
 	res = gcd(*lengths[:2])
@@ -58,7 +59,7 @@ def findLCM(lengths):
 	mul = 1
 	for length in lengths:
 		mul *= length
-	return mul/findGCD(lengths)/len(lengths)
+	return mul/findGCD(lengths)
 
 def findOrder(cycles):
 	lengths = []
@@ -110,8 +111,8 @@ def main():
 	permlist = permtuple[0]
 	plhthos = permtuple[1]
 	cycles = permToCycles(permlist)
-	orbits = findOrbits(permlist)
-	length = n - len(orbits)
+	#orbits = findOrbits(permlist)
+	length = n
 	transpositions = []
 	p = 0
 	for num in permlist:
